@@ -1,0 +1,15 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-knowhouse-staging-15935-authRole",
+      "UnauthRoleArn": "arn:aws:iam::556092141971:role/amplify-knowhouse-staging-15935-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::556092141971:role/amplify-knowhouse-staging-15935-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-knowhouse-staging-15935-deployment",
+      "UnauthRoleName": "amplify-knowhouse-staging-15935-unauthRole",
+      "StackName": "amplify-knowhouse-staging-15935",
+      "StackId": "arn:aws:cloudformation:us-east-1:556092141971:stack/amplify-knowhouse-staging-15935/af673930-c0ea-11eb-baa7-0af19c0e1949",
+      "AmplifyAppId": "dfmfuyoy0pohl"
+    }
+  }
+}
