@@ -3,45 +3,107 @@ import { DataStore } from '@aws-amplify/datastore';
 
 import { Blog } from '../models';
 
-class BlogView extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        blogs: [],
-      };
-    }
-  
-    render() {
-      return (
-        <div>
-          <button
-            className="queryBlogs"
-            onClick={() => this.setState({blogs: queryBlog})}
-          >
-          queryBlogs
-          </button>
-          <BlogList blogs={this.state.blogs}></BlogList>
-        </div>
-      );
-    }
-  }
 
-  function BlogList(props) {
-    const blogs = props.blogs;
-    const listItems = blogs.map((blog) =>
-      <li key={blog.toString()}>
-        {blog.name}
-      </li>
-    );
+class BlogRow extends React.Component {
+  render() {
+    const blog = this.props.blog;
+    const blogId = blog.id;
+    const blogName = blog.name;
+
     return (
-      <ul>{listItems}</ul>
+      <tr>
+        <td>{blogId}</td>
+        <td>{blogName}</td>
+      </tr>
     );
   }
+}
 
-  const queryBlog =  async ()=>{
-    const models = await DataStore.query(Blog);
-    console.log(models);
-    return models
+class BlogTable extends React.Component {
+  render() {
+
+    const rows = [];
+
+    console.log(this.props.blogs)
+    this.props.blogs.forEach((blog) => {
+      rows.push(
+        <BlogRow
+          blog={blog}
+          key={blog.id}
+        />
+      );
+    });
+
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>View</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </table>
+    );
+  }
+}
+/*
+class SearchBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+  }
+  
+  handleFilterTextChange(e) {
+    this.props.onFilterTextChange(e.target.value);
   }
 
-  export default BlogView;
+  
+  render() {
+    return (
+      <form>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={this.props.filterText}
+          onChange={this.handleFilterTextChange}
+        />
+      </form>
+    );
+  }
+}
+
+class FilterableBlogTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filterText: '',
+    };
+    
+    this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+  }
+
+  handleFilterTextChange(filterText) {
+    this.setState({
+      filterText: filterText
+    });
+  }
+  
+
+  render() {
+    return (
+      <div>
+        <SearchBar
+          filterText={this.state.filterText}
+          onFilterTextChange={this.handleFilterTextChange}
+        />
+        <BlogTable
+          blogs={this.props.blogs}
+          filterText={this.state.filterText}
+        />
+      </div>
+    );
+  }
+}
+*/
+export default BlogTable;

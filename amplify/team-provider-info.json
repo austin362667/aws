@@ -10,6 +10,11 @@
       "StackName": "amplify-knowhouse-staging-15935",
       "StackId": "arn:aws:cloudformation:us-east-1:556092141971:stack/amplify-knowhouse-staging-15935/af673930-c0ea-11eb-baa7-0af19c0e1949",
       "AmplifyAppId": "dfmfuyoy0pohl"
+    },
+    "categories": {
+      "auth": {
+        "knowhouse700dafa0": {}
+      }
     }
   }
 }
