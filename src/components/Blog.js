@@ -70,7 +70,7 @@ class BlogTable extends React.Component {
         <thead>
           <tr>
             <th>Id</th>
-            <th>Name</th>
+            <th>Title</th>
             <th>View</th>
           </tr>
         </thead>
