@@ -1,3 +1,20 @@
+type Node @model @auth(rules: [{allow: public}]) @key(name: "byPost", fields: ["postID"]) {
+  id: ID!
+  data: String
+  position: String
+  postID: ID
+  nameId: String
+}
+
+type Edge @model @auth(rules: [{allow: public}]) @key(name: "byPost", fields: ["postID"]) {
+  id: ID!
+  source: String
+  target: String
+  type: String
+  label: String
+  postID: ID
+}
+
 type Blog @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
@@ -7,8 +24,10 @@ type Blog @model @auth(rules: [{allow: public}]) {
 type Post @model @key(name: "byBlog", fields: ["blogID"]) @auth(rules: [{allow: public}]) {
   id: ID!
   title: String!
-  blogID: ID!
+  blogID: ID
   comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
+  Edges: [Edge] @connection(keyName: "byPost", fields: ["id"])
+  Nodes: [Node] @connection(keyName: "byPost", fields: ["id"])
 }
 
 type Comment @model @key(name: "byPost", fields: ["postID"]) @auth(rules: [{allow: public}]) {
@@ -16,3 +35,4 @@ type Comment @model @key(name: "byPost", fields: ["postID"]) @auth(rules: [{allo
   postID: ID!
   content: String!
 }
+ 

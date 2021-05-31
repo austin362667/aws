@@ -1,6 +1,6 @@
 import './App.css';
 import { DataStore } from '@aws-amplify/datastore';
-import { Blog } from './models';
+import { Blog, Post } from './models';
 import BlogTable from './components/Blog'
 import OverviewFlow from './components/Graph'
 import React from 'react';
@@ -12,6 +12,9 @@ import ReactFlow, {
   Background,
 } from 'react-flow-renderer';
 import BasicFlow from './components/Basic.tsx'
+import { API, graphqlOperation } from 'aws-amplify';
+
+import * as queries from './graphql/queries';
 
 // const BLOGS = [
 //   {id: 'sljhboir930wergwabrewebvi3opubhb', name: 'Alisa'},
@@ -20,13 +23,13 @@ import BasicFlow from './components/Basic.tsx'
 //   {id: 'sljhboir93wreg0u4wg3i3wetbrbesdr', name: 'Betty'},
 // ];
 
-const elements = [
-  { id: '1', data: { label: '睡覺' }, position: { x: 50, y: 50 } },
-  // you can also pass a React component as a label
-  { id: '2', data: { label: '吃飯'}, position: { x: 250, y: 250 } },
-  { id: 'e1-2', source: '1', target: '2', arrowHeadType: 'arrowclosed', label: '然後',},
-  { id: 'e2-1', source: '2', target: '1', arrowHeadType: 'arrowclosed', label: '循環',},
-];
+// const elements = [
+//   { id: '1', data: { label: '睡覺' }, position: { x: 50, y: 50 } },
+//   // you can also pass a React component as a label
+//   { id: '2', data: { label: '吃飯'}, position: { x: 250, y: 250 } },
+//   { id: 'e1-2', source: '1', target: '2', arrowHeadType: 'arrowclosed', label: '然後',},
+//   { id: 'e2-1', source: '2', target: '1', arrowHeadType: 'arrowclosed', label: '循環',},
+// ];
 
 
 
@@ -41,18 +44,22 @@ class App extends React.Component {
 
   getData = () => {
 
-    DataStore.query(Blog)
+    API.graphql({ query: queries.listPosts })
       .then(models => {
-          return models
+        // console.log(models.data.listPosts.items)
+          return models.data.listPosts.items
       })
       .then(models => {
 
           var blogs = [];
 
           for (let i=0; i<models.length; i++) { 
+            // console.log(models[i].Nodes.items)
               blogs.push({
-                  name: models[i].name,
+                  name: models[i].title,
                   id: models[i].id,
+                  edges: models[i].Edges.items,
+                  nodes: models[i].Nodes.items,
               });
           }
 
@@ -65,15 +72,15 @@ class App extends React.Component {
 
   render () {
     return (
-      <div className="App" style={{width: '60%', height: '50%'}}>
-      <h1>我是如何在10天內成為廢物的學習地圖</h1>
-    {/* <BlogTable blogs={this.state.properties} /> */}
-    {<ReactFlow elements={elements} />}
+      <div className="App">
+      {/* <h1>我是如何在10天內成為廢物的學習地圖</h1> */}
+    <BlogTable blogs={this.state.properties} />
+    {/* {<ReactFlow elements={elements} />} */}
     {/* <OverviewFlow /> */}
     {/* <BasicFlow elements={elements}/> */}
-    <h3>
+    {/* <h3>
     最近與夥伴們有個口頭禪就是『我真是個廢物呢』，一開始的開始可能是打打嘴砲，最近感觸越來越深，只有不斷地把自己的現狀錨定在 0 分，才有追求卓越的可能性，我們似乎很享受當個快樂的低能兒，我覺得這狀態挺好，stay hungry stay foolish。
-    </h3>
+    </h3> */}
     </div>
     )
 }

@@ -1,0 +1,19 @@
+query getGraphPost {
+  getGraphPost() {
+    id
+    title
+    Edges {
+      id
+      source
+      target
+      type
+      label
+    }
+    Nodes {
+      id
+      data
+      position
+    }
+  }
+}
+ 

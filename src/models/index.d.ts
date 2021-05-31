@@ -4,6 +4,31 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
+export declare class Node {
+  readonly id: string;
+  readonly data?: string;
+  readonly position?: string;
+  readonly postID?: string;
+  readonly nameId?: string;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<Node>);
+  static copyOf(source: Node, mutator: (draft: MutableModel<Node>) => MutableModel<Node> | void): Node;
+}
+
+export declare class Edge {
+  readonly id: string;
+  readonly source?: string;
+  readonly target?: string;
+  readonly type?: string;
+  readonly label?: string;
+  readonly postID?: string;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<Edge>);
+  static copyOf(source: Edge, mutator: (draft: MutableModel<Edge>) => MutableModel<Edge> | void): Edge;
+}
+
 export declare class Blog {
   readonly id: string;
   readonly name: string;
@@ -17,8 +42,10 @@ export declare class Blog {
 export declare class Post {
   readonly id: string;
   readonly title: string;
-  readonly blogID: string;
+  readonly blogID?: string;
   readonly comments?: (Comment | null)[];
+  readonly Edges?: (Edge | null)[];
+  readonly Nodes?: (Node | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Post>);
